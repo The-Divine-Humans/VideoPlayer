@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="Vp.css">
+     <link rel="shortcut icon" href="images/Vz.jpg" type="image/x-icon">
+     <script src="vp.js" defer></script>
+     
+    <title>Video Player</title>
+</head>
+<body>
+                    <!--////////////////////////////////////// Video Player Code//////////////////////////////////////////////////////// -->
+
+                    <div id="screendiv">
+                        <!-- https://drive.google.com/uc?id=1QAkCKZUvfy12yubtrx40oQKccVCICEAN -->
+			            <div id="divscreen">
+                        	<video id="screen">
+                            		<source src="https://drive.google.com/uc?id=18u2LAx40rUVEBUuUGUJAf6fN_ZT3YTbR" type="video/mp4">
+                                    <!-- <source src="https://youtu.be/A_aEDhUU-Xc" type="video/youtube"> -->
+                        	</video>
+			            </div>
+                        <div id="controlscontainer">
+                            <input id="progress" min="0" max="100" title="Seek" type="range" steps="any" value="0">
+                            <div id="controls">
+                                <div id="timer">
+                                    <div class="currtime">0:00</div>
+				                    <div>/</div>
+                                    <div class="totaltime">00:00</div>
+                                </div>
+                                <div id="back" title="Seek Backward">⏪</div>
+                                <div id="play" style="display:block;" title="Play"><strong>▶</strong></div>
+                                <div id="pause" style="display:none;" title="Pause">⏸</div>
+                                <div id="forward" title="Seek Forward">⏩</div>    
+                                <div id="minip" style="display:block;" title="Click to go in Picture in Picture Mode"> <strong>◲</strong></div>
+                                <div id="fullscr" style="display:block;"title="Click for Fullscreen Mode"><strong>⇔</strong></div>
+                                <div id="voln" style="display:block" title="Click to Mute">
+                                    😁
+                                </div>
+                                <div id="mute" style="display:none" title="Click to Unmute">
+                                    🤐
+                                </div>
+                                <div id="volumectrl">
+				                    <div id="volval">100</div>
+                                    <input type="range" min="0" max="100" steps="any" value="100" id="volslider" title="Volume">  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- /////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+</body>
+</html>
