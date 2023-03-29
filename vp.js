@@ -2,8 +2,8 @@ const playbtn=document.querySelector("#play");
 const pausebtn=document.querySelector("#pause");
 const forward=document.querySelector("#forward");
 const back=document.querySelector("#back");
-const video= document.querySelector("#screen");
-const videocontainer=document.querySelector("screendiv");
+const Video= document.querySelector("#screen");
+const Videocontainer=document.querySelector("#divscreen");
 const mpbtn=document.querySelector("#minip");
 const fullscrbtn=document.querySelector("#fullscr");
 const controls=document.querySelector("#controlscontainer");
@@ -14,52 +14,77 @@ const mute=document.querySelector("#mute");
 const currentTimeElement=document.querySelector(".currtime");
 const totalTimeElement=document.querySelector(".totaltime");
 const seekbar=document.querySelector("#progress");
+const playlistbutton=document.querySelector("#playlistbutton")
+const VideoList=document.querySelector("#playlistbox")
+const videoname=document.querySelector("#videonamediv")
 
 
-///////////////////////////////////----Play Pause operation----////////////////////////////////////
+///////////////////////////////////-----Video Name Function-------////////////////////////////////////
+    function changename(element){
+        videoname.innerHTML=element.innerHTML
+    }
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////-----Change Video Source---------//////////////////////////////////
+function changevideo(e){
+    togglePlayPause();
+    Video.setAttribute('src',e)
+    Video.load();
+    togglePlayPause();
+   
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////-----Document Load Time Script-----/////////////////////////////////
+document.addEventListener("loaded",()=>{
+    screen.style.width===(7/9)*window.innerWidth;
+    screen.style.height===(7/9)*window.innerHeight;
+    
+})
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////----Play Pause operation----///////////////////////////////////////
 
 playbtn.addEventListener("click" , togglePlayPause)
-video.addEventListener("click",togglePlayPause) 
+Video.addEventListener("click",togglePlayPause) 
 pausebtn.addEventListener("click",togglePlayPause)
 controls.addEventListener("hover",display)
 
 function togglePlayPause(){
-    if(video.paused==true)
+    if(Video.paused==true)
     {
-        video.play()
+        Video.play()
         pausebtn.style.display="block"
         playbtn.style.display="none"
     }
     else{
-        video.pause()
+        Video.pause()
         playbtn.style.display="block"
         pausebtn.style.display="none"
         
     }   
 }
-
-function display()
-{ 
-    if(controls.addEventListener("hover")==true || video.addEventListener("hover")==true || video.paused==true)
-    {
-        controls.style.display="flex" 
-    }
-    else{
-        controls.style.display="none"
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////-------PlaylistBox Display-------/////////////////////////////////
+function display(element) {
+    if (document.getElementById(element).style.display == "none") {
+        document.getElementById(element).style.display = "block";
+        
+        } 
+    else {
+        document.getElementById(element).style.display = "none";
     }
 }
-////////////////////////////////////////////////////////////////
-///////////////////////----Screen Modes----////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////----Screen Modes----/////////////////////////////////////////////////////////////
 fullscrbtn.addEventListener("click",fullscreen)
-video.addEventListener("dblclick",fullscreen)
+Video.addEventListener("dblclick",fullscreen)
 function fullscreen(){
-   if(fullscrbtn.requestFullscreen ||video.requestFullscreen)
+   if(fullscrbtn.requestFullscreen ||Video.requestFullscreen)
    {
-        video.requestFullscreen();
+        Video.requestFullscreen();
    }
-   else if(video.requestFullscreen==true)
+   else if(Video.requestFullscreen==true)
    {
-        video.exitFullscreen();
+        Video.exitFullscreen();
    }
   
 }
@@ -69,19 +94,18 @@ function pipmode() {
             mpbtn.exitPictureInPicture();
         }
     else if (document.pictureInPictureEnabled) {
-            video.requestPictureInPicture();
+            Video.requestPictureInPicture();
         }
 }
 
-
-//////////////////////////////////////////////////////////////////////
-///////////////////////----Volume----////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////----Volume----/////////////////////////////////////////////////////
 mute.addEventListener("click",toggleMute)
 volvalue.addEventListener("click",toggleMute)
 vol.addEventListener("input",e =>{
-    video.volume=(e.target.value)/100
-    video.muted=e.target.value===0
-    volval.innerHTML=Math.round((video.volume)*100)
+    Video.volume=(e.target.value)/100
+    Video.muted=e.target.value===0
+    volval.innerHTML=Math.round((Video.volume)*100)
     if(vol.value==0){
         mute.style.display="block"
         volvalue.style.display="none"
@@ -91,13 +115,13 @@ vol.addEventListener("input",e =>{
     else{
         mute.style.display="none"
         volvalue.style.display="block"
-        volval.innerHTML=Math.round((video.volume)*100);
+        volval.innerHTML=Math.round((Video.volume)*100);
    }
 })
 function toggleMute()
 {
-   video.muted=!video.muted
-   if(video.muted==true || video.volume==0)
+   Video.muted=!Video.muted
+   if(Video.muted==true || Video.volume==0)
    {
         mute.style.display="block"
         volvalue.style.display="none"
@@ -107,8 +131,8 @@ function toggleMute()
    else{
         mute.style.display="none"
         volvalue.style.display="block"
-        volval.innerHTML=Math.ceil((video.volume)*100)
-        vol.value=Math.floor((video.volume)*100)
+        volval.innerHTML=Math.ceil((Video.volume)*100)
+        vol.value=Math.floor((Video.volume)*100)
    }
 }
 
@@ -116,30 +140,31 @@ function toggleMute()
 /////////////////////////////////////////////////////////////////
 /////////////////--------ProgressBar-----------////////////////////
 
-video.addEventListener("loadeddata",()=>{
-    seekbar.setAttribute("max",(video.duration));
+Video.addEventListener("loadeddata",()=>{
+    seekbar.setAttribute("max",(Video.duration));
+    
 })
-video.addEventListener("timeupdate",()=>{
-    seekbar.value=(video.currentTime)
-    if(video.currentTime==video.duration)
+Video.addEventListener("timeupdate",()=>{
+    seekbar.value=(Video.currentTime)
+    if(Video.currentTime==Video.duration)
     {
         togglePlayPause()
     }
 })
     
 seekbar.addEventListener("input",e => {
-    video.currentTime=(e.target.value);
+    Video.currentTime=(e.target.value);
     
 })
 ///////////////////////////////////////////////////////////////////
 /////////////////--------Duration-----------////////////////////
 
-video.addEventListener("loadeddata",()=>{
-    totalTimeElement.textContent=formatDuration(video.duration)
+Video.addEventListener("loadeddata",()=>{
+    totalTimeElement.textContent=formatDuration(Video.duration)
     
 })
-video.addEventListener("timeupdate",()=>{
-    currentTimeElement.textContent=formatDuration(video.currentTime)
+Video.addEventListener("timeupdate",()=>{
+    currentTimeElement.textContent=formatDuration(Video.currentTime)
     
 })
 const leadingZeroFormatter=new Intl.NumberFormat(undefined,{
@@ -162,19 +187,19 @@ function formatDuration(time){
 
 function skip(duration){
     
-    video.currentTime+=duration
+    Video.currentTime+=duration
 }
 forward.addEventListener("click",skipf)
 function skipf(duration)
 {
     duration=10;
-    video.currentTime+=duration
+    Video.currentTime+=duration
 
 }
 function skipb(duration)
 {
     duration=5;
-    video.currentTime-=duration
+    Video.currentTime-=duration
 }
 back.addEventListener("click",skipb)
 ///////////////////////////////////////////////////////////////////
