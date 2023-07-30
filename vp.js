@@ -14,59 +14,49 @@ const mute=document.querySelector("#mute");
 const currentTimeElement=document.querySelector(".currtime");
 const totalTimeElement=document.querySelector(".totaltime");
 const seekbar=document.querySelector("#progress");
-const playlistbutton=document.querySelector("#playlistbutton")
 const VideoList=document.querySelector("#playlistbox")
 const videoname=document.querySelector("#videonamediv")
-const ham=document.querySelector(".ham")
-const nav=document.querySelector(".navButtons")
-const hamsym=document.querySelector("#hamsym")
-const closebtn=document.querySelector("#close")
-const closefscreen=document.querySelector("#exitfscreen")
-const Social=document.querySelector(".Social")
+const closefscreen=document.querySelector("#exitfullscr")
 
 ///////////////////////////////////-----Video Name Function-------///////////////////////////////////////////////////////////////
-    function changename(element){
-        videoname.innerHTML=element.innerHTML
-    }
-    
-    document.addEventListener("loaded",()=>{
-        var winwidth=window.innerWidth
-        var winheight=window.innerHeight
-        document.querySelector("#screensizebox").innerHTML=" Screen Size → W:"+winwidth+"Px X "+"H:"+winheight+"Px";
-        console.log(winheight);
-        console.log(winwidth);
-    })
-    window.addEventListener("resize",()=>{
-        var winwidth=window.innerWidth
-        var winheight=window.innerHeight
-        document.querySelector("#screensizebox").innerHTML=" Screen Size → W:"+winwidth+"Px X "+"H:"+winheight+"Px";
-        console.log(winheight);
-        console.log(winwidth);
-    })
-    window.addEventListener("orientationchange",()=>{
-        var winwidth=window.innerWidth
-        var winheight=window.innerHeight
-        document.querySelector("#screensizebox").innerHTML=" Screen Size → W:"+winwidth+"Px X "+"H:"+winheight+"Px";
-        console.log(winheight);
-        console.log(winwidth);
-    })
-    
-    
-    
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-// ham.addEventListener("click",()=>{
-//     if(nav.style.display=="block"){
-//         hamsym.style.display="none"
-//         closebtn.style.display="block"
-//     }
-//     else{
-//         hamsym.style.display="block"
-//         closebtn.style.display="none"
-//     }
-// })
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////-----Video Name Function-------///////////////////////////////////////////////////////////////
+function changename(element){
+    videoname.innerHTML=element
+}
+
+document.addEventListener("loaded",()=>{
+    var winwidth=window.innerWidth
+    var winheight=window.innerHeight
+    document.querySelector("#screensizebox").innerHTML=" Screen Size → W:"+winwidth+"Px X "+"H:"+winheight+"Px";
+    console.log(winheight);
+    console.log(winwidth);
+})
+Video.addEventListener("onchange",()=>{
+    var winwidth=window.innerWidth
+    var winheight=window.innerHeight
+    document.querySelector("#screensizebox").innerHTML=" Screen Size → W:"+winwidth+"Px X "+"H:"+winheight+"Px";
+})
+document.addEventListener("onchange",()=>{
+    var winwidth=window.innerWidth
+    var winheight=window.innerHeight
+    document.querySelector("#screensizebox").innerHTML=" Screen Size → W:"+winwidth+"Px X "+"H:"+winheight+"Px";
+    console.log(winheight);
+    console.log(winwidth);
+})
+window.addEventListener("resize",()=>{
+    var winwidth=window.innerWidth
+    var winheight=window.innerHeight
+    document.querySelector("#screensizebox").innerHTML=" Screen Size → W:"+winwidth+"Px X "+"H:"+winheight+"Px";
+    console.log(winheight);
+    console.log(winwidth);
+})
+window.addEventListener("orientationchange",()=>{
+    var winwidth=window.innerWidth
+    var winheight=window.innerHeight
+    document.querySelector("#screensizebox").innerHTML=" Screen Size → W:"+winwidth+"Px X "+"H:"+winheight+"Px";
+    console.log(winheight);
+    console.log(winwidth);
+})
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////-----Change Video Source---------//////////////////////////////////
@@ -77,15 +67,7 @@ function changevideo(e){
     togglePlayPause();
    
 }
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////-----Document Load Time Script-----/////////////////////////////////
-// document.addEventListener("loaded",()=>{
-//     screen.style.width===(7/9)*window.innerWidth;
-//     screen.style.height===(7/9)*window.innerHeight;
-    
-// })
-//////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////----Play Pause operation----///////////////////////////////////////
 
 playbtn.addEventListener("click" , togglePlayPause)
@@ -110,43 +92,57 @@ function togglePlayPause(){
 function controldisplay(btn){
     if (document.getElementById(btn).style.display == "none") {
         document.getElementById(btn).style.display = "flex";
-        document.getElementById("controloff").style.display="block"
+        document.getElementById("topline").style.display="flex"
         document.getElementById("controlon").style.display="none"
         Video.style.height="65vh"
         } 
     else {
         document.getElementById(btn).style.display = "none";
         document.getElementById("controlon").style.display="block"
-        document.getElementById("controloff").style.display="none"
+        document.getElementById("topline").style.display="none"
         Video.style.height="75vh" 
     } 
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-///////////////////////----Screen Modes----/////////////////////////////////////////////////////////////
+///////////////////////////////////////----Screen Modes----/////////////////////////////////////////////////////////////
+
+///////////////////////////////////------FullScreen Button--------/////////////////////////////////////
 fullscrbtn.addEventListener("click",fullscreen)
-// closefscreen.addEventListener("click",fullscreen)
+closefscreen.addEventListener("click",fullscreen)
 Video.addEventListener("dblclick",fullscreen)
+document.addEventListener("fullscreenchange",()=>{
+    if(document.fullscreenElement==null || document.fullscreenEnabled==false){
+        closefscreen.style.display="none"
+        fullscrbtn.style.display="block"
+    }
+    else{
+        closefscreen.style.display="block"
+        fullscrbtn.style.display="none"
+    }
+})
 function fullscreen(){
-   if(document.fullscreenElement==null)
+   if(document.fullscreenElement!=null)
    {
-        Videocontainer.requestFullscreen();
+        document.exitFullscreen()
+        closefscreen.style.display="none"
+        fullscrbtn.style.display="block"
    }
    else
    {
-        Videocontainer.exitFullscreen();
+        Videocontainer.requestFullscreen()
+        closefscreen.style.display="block"
+        fullscrbtn.style.display="none"
    }
-  
 }
-// document.addEventListener("fullscreenchange",()=>{
 
-// })
+///////////////////////////////////------MiniPlayer Button--------/////////////////////////////////////
 mpbtn.addEventListener("click",pipmode)
 function pipmode() {
-    if (mpbtn.pictureInPictureElement) {
-            mpbtn.exitPictureInPicture();
+    if (document.pictureInPictureElement) {
+            document.exitPictureInPicture();
         }
-    else if (document.pictureInPictureEnabled) {
+    else {
             Video.requestPictureInPicture();
         }
 }
@@ -214,6 +210,25 @@ seekbar.addEventListener("input",e => {
     
 })
 /////////////////////////////////////////////////////////////////////////////////
+/////////////////--------ProgressBar-----------///////////////////////////////////
+
+Video.addEventListener("loadeddata",()=>{
+    seekbar.setAttribute("max",(Video.duration));
+    
+})
+Video.addEventListener("timeupdate",()=>{
+    seekbar.value=(Video.currentTime)
+    if(Video.currentTime==Video.duration)
+    {
+        togglePlayPause()
+    }
+})
+    
+seekbar.addEventListener("input",e => {
+    Video.currentTime=(e.target.value);
+    
+})
+/////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////--------Duration-----------/////////////////////////
 
 Video.addEventListener("loadeddata",()=>{
@@ -241,8 +256,8 @@ function formatDuration(time){
         }:${leadingZeroFormatter.format(sec)}`
     }
 }
-forward.addEventListener("click",skip(10))
-back.addEventListener("click",skip(-5))
+forward.addEventListener("click",()=>{skip(10)})
+back.addEventListener("click",()=>{skip(-5)})
 function skip(duration){
     
     Video.currentTime+=duration
